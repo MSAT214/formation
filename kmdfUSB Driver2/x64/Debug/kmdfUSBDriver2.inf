@@ -1,0 +1,90 @@
+;
+; kmdfUSBDriver2.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USBDevice
+ClassGuid={88BAE032-5A81-49f0-BC3D-A4FF138216D6}
+Provider=%ManufacturerName%
+CatalogFile=kmdfUSBDriver2.cat
+DriverVer = 03/23/2020,15.14.4.192
+
+[DestinationDirs]
+DefaultDestDir = 12
+kmdfUSBDriver2_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+kmdfUSBDriver2.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%kmdfUSBDriver2.DeviceDesc%=kmdfUSBDriver2_Device, USB\VID_vvvv&PID_pppp
+
+[kmdfUSBDriver2_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+kmdfUSBDriver2.sys
+
+[kmdfUSBDriver2_Device.NT.HW]
+AddReg=kmdfUSBDriver2_AddReg
+
+[kmdfUSBDriver2_AddReg]
+; By default, USBDevice class uses iProduct descriptor to name the device in
+; Device Manager on Windows 8 and higher.
+; Uncomment for this device to use %DeviceName% on Windows 8 and higher:
+;HKR,,FriendlyName,,%kmdfUSBDriver2.DeviceDesc%
+
+;-------------- Service installation
+[kmdfUSBDriver2_Device.NT.Services]
+AddService = kmdfUSBDriver2,%SPSVCINST_ASSOCSERVICE%, kmdfUSBDriver2_Service_Inst
+
+; -------------- kmdfUSBDriver2 driver install sections
+[kmdfUSBDriver2_Service_Inst]
+DisplayName    = %kmdfUSBDriver2.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\kmdfUSBDriver2.sys
+
+;
+;--- kmdfUSBDriver2_Device Coinstaller installation ------
+;
+
+[kmdfUSBDriver2_Device.NT.CoInstallers]
+AddReg=kmdfUSBDriver2_Device_CoInstaller_AddReg
+CopyFiles=kmdfUSBDriver2_Device_CoInstaller_CopyFiles
+
+[kmdfUSBDriver2_Device_CoInstaller_AddReg]
+;
+
+
+[kmdfUSBDriver2_Device_CoInstaller_CopyFiles]
+;
+
+
+[kmdfUSBDriver2_Device.NT.Wdf]
+KmdfService =  kmdfUSBDriver2, kmdfUSBDriver2_wdfsect
+[kmdfUSBDriver2_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Universal Serial Bus devices"
+DiskName = "kmdfUSBDriver2 Installation Disk"
+kmdfUSBDriver2.DeviceDesc = "kmdfUSBDriver2 Device"
+kmdfUSBDriver2.SVCDESC = "kmdfUSBDriver2 Service"
+REG_MULTI_SZ = 0x00010000

@@ -1,0 +1,19 @@
+﻿  Building 'kmdfUSB Driver2' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Debug\kmdfUSBDriver2.inf
+  Stamping [Version] section with DriverVer=03/23/2020,15.14.4.192
+  kmdfUSB Driver2.vcxproj -> C:\Users\mohand\source\repos\kmdfUSB Driver2\x64\Debug\kmdfUSBDriver2.sys
+  Driver is a Universal Driver.
+  .........................
+  Signability test complete.
+  
+  Errors:
+  None
+  
+  Warnings:
+  None
+  
+  Catalog generation complete.
+  C:\Users\mohand\source\repos\kmdfUSB Driver2\x64\Debug\kmdfUSB Driver2\kmdfusbdriver2.cat
+  Done Adding Additional Store
+  Successfully signed: C:\Users\mohand\source\repos\kmdfUSB Driver2\x64\Debug\kmdfUSB Driver2\kmdfusbdriver2.cat
+  
